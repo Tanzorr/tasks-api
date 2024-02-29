@@ -1,10 +1,6 @@
 <?php
+use App\App;
 
-
-use App\Container;
-use App\Router;
-
-echo "root";
 spl_autoload_register(/**
  * @throws Exception
  */ callback: function ($className) {
@@ -15,19 +11,17 @@ spl_autoload_register(/**
 });
 
 
-$container = new Container();
-$router = new Router($container);
+$app = new App();
 
+$app->setPatch('tasksPatch', './tasks.json');
 
-$container->setParameter('tasksPatch', './tasks.json');
-
-$router->get('/', 'TaskController@index');
-$router->post('/add', 'TaskController@add');
-$router->delete('/delete/{id}', 'TaskController@delete');
+$app->router->get('/', 'TaskController@index');
+$app->router->post('/add', 'TaskController@add');
+$app->router->delete('/delete/{id}',  'TaskController@delete');
 
 
 try {
-    $router->route();
+    $app->router->route();
 } catch (ReflectionException $e) {
     echo $e->getMessage();
 }
