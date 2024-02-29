@@ -11,12 +11,7 @@ class Request
         $this->input = array_merge($_GET, $_POST);
     }
 
-    public function all(): array
-    {
-        return $this->input;
-    }
-
-    public function method()
+    public function method(): string
     {
         return strtolower($_SERVER['REQUEST_METHOD']);
     }
@@ -25,7 +20,6 @@ class Request
     {
         $body = [];
 
-        // Check if the content type is JSON
         if ($this->method() === 'post' && strtolower($_SERVER['CONTENT_TYPE']) === 'application/json') {
             $json = file_get_contents('php://input');
             $body = json_decode($json, true);
@@ -34,7 +28,6 @@ class Request
                 throw new \Exception('Body is ampty');
             }
 
-            // Sanitize the decoded JSON data
             $body = array_map('htmlspecialchars', $body);
         }
 

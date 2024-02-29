@@ -9,7 +9,7 @@ class TaskController
     {
     }
 
-    public function index()
+    public function index(): void
     {
         print_r($this->task->all());
     }
@@ -20,7 +20,7 @@ class TaskController
         $this->task->add($validatedData);
     }
 
-    public function delete($id)
+    public function delete($id): void
     {
         $this->task->delete($id);
     }

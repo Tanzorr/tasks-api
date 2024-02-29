@@ -16,8 +16,7 @@ class Task
         private readonly Filesystem $filesystem,
         protected string            $tasksPatch
     )
-    {
-    }
+    {}
 
     public function all(): array
     {
@@ -32,9 +31,9 @@ class Task
             echo "Tis task title already exits. Please chose another one.";
             return;
         }
+
         $tasks[$dataTask['title']][] = $dataTask;
         $this->filesystem->put($this->tasksPatch, json_encode($tasks));
-
     }
 
     public function delete(string $id): void

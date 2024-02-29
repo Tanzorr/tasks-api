@@ -6,9 +6,7 @@ class TaskRequest extends Request
 {
 
     public function __construct()
-    {
-
-    }
+    {}
 
     public function validated()
     {
