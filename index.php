@@ -13,7 +13,7 @@ spl_autoload_register(/**
 
 $app = new App();
 
-$app->setPatch('tasksPatch', './tasks.json');
+$app->setPath('tasksPatch', './tasks.json');
 
 $app->router->get('/', 'TaskController@index');
 $app->router->post('/add', 'TaskController@add');

@@ -14,6 +14,9 @@ class TaskController
         print_r($this->task->all());
     }
 
+    /**
+     * @throws \Exception
+     */
     public function add(): void
     {
         $validatedData = $this->taskRequest->validated();
