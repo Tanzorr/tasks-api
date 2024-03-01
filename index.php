@@ -1,15 +1,9 @@
 <?php
-use App\App;
 
-spl_autoload_register(/**
- * @throws Exception
- */ callback: function ($className) {
-    $className = str_replace("\\", "/", $className);
-    $className = str_replace("App/", "", $className);
 
-    require_once __DIR__ . "/src/$className.php";
-});
+use App\Core\App;
 
+require_once __DIR__."/vendor/autoload.php";
 
 $app = new App();
 

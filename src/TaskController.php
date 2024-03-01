@@ -3,6 +3,8 @@
 namespace App;
 
 
+use App\Models\Task;
+
 class TaskController
 {
     public function __construct(private Task $task, private TaskRequest $taskRequest)

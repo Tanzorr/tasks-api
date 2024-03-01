@@ -13,6 +13,9 @@ COPY .htaccess /var/www/html/
 # Set the working directory
 WORKDIR /var/www/html
 
+# Install Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
 # Expose port 80
 EXPOSE 80
 

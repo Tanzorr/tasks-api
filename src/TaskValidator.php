@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Core\Validator;
+
 class TaskValidator extends Validator
 {
 
