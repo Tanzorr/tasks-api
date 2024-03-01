@@ -1,0 +1,16 @@
+{
+    "name": "root/html",
+    "type": "project",
+    "license": "1",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Oleksandr"
+        }
+    ],
+    "require": {}
+}

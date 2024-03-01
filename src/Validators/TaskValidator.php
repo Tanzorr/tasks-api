@@ -1,6 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Validators;
+
+use App\Core\Validator;
 
 class TaskValidator extends Validator
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Core;
 
 class Router
 {
@@ -61,7 +61,7 @@ class Router
      */
     private function callControllerMethod($controller, $method, $params): void
     {
-        $controllerClassName = 'App\\' . $controller;
+        $controllerClassName = 'App\\Controllers\\' . $controller;
 
         if (class_exists($controllerClassName)) {
             $controllerInstance = $this->container->build($controllerClassName);
