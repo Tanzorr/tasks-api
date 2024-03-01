@@ -9,18 +9,21 @@ class TaskController
     {
     }
 
-    public function index()
+    public function index(): void
     {
         print_r($this->task->all());
     }
 
+    /**
+     * @throws \Exception
+     */
     public function add(): void
     {
         $validatedData = $this->taskRequest->validated();
         $this->task->add($validatedData);
     }
 
-    public function delete($id)
+    public function delete($id): void
     {
         $this->task->delete($id);
     }

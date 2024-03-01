@@ -10,6 +10,9 @@ class Container
     private array $parameters = [];
     private array $cache = [];
 
+    /**
+     * @throws \ReflectionException
+     */
     public function build(string $className): object
     {
         if (!class_exists($className)) {
@@ -24,19 +27,6 @@ class Container
     public function setParameter(string $key, mixed $value): void
     {
         $this->parameters[$key] = $value;
-    }
-
-    public function get(string $key): mixed
-    {
-        if (isset($this->cache[$key])) {
-            return $this->cache[$key];
-        }
-
-        if (isset($this->parameters[$key])) {
-            return $this->parameters[$key];
-        }
-
-        throw new LogicException("Cannot fetch from container any service/parameter under key '{$key}'.");
     }
 
     /**
@@ -74,6 +64,9 @@ class Container
         return $method->getDeclaringClass()->newInstanceArgs($dependencies);
     }
 
+    /**
+     * @throws \ReflectionException
+     */
     private function resolveDependency(\ReflectionParameter $parameter): mixed
     {
         $parameterName = $parameter->getName();

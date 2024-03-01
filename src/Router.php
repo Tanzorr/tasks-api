@@ -4,33 +4,28 @@ namespace App;
 
 class Router
 {
-    private $routes = [];
-    private Container $container;
-
-
-    public function __construct(Container $container)
+    private array $routes = [];
+    public function __construct(private Container $container)
     {
-        $this->container = $container;
     }
 
-    public function get($url, $controllerMethod)
+    public function get($url, $controllerMethod): void
     {
         $this->addRoute('GET', $url, $controllerMethod);
     }
 
-    public function post($url, $controllerMethod)
+    public function post($url, $controllerMethod): void
     {
         $this->addRoute('POST', $url, $controllerMethod);
     }
 
-    public function delete($url, $controllerMethod)
+    public function delete($url, $controllerMethod): void
     {
         $this->addRoute('DELETE', $url, $controllerMethod);
     }
 
-    private function addRoute($method, $url, $controllerMethod)
+    private function addRoute($method, $url, $controllerMethod): void
     {
-        // Replace "{param}" with a regular expression to capture a parameter
         $url = preg_replace('/\{(\w+)\}/', '(?<$1>[^\/]+)', $url);
 
         $this->routes[$method][$url] = $controllerMethod;
@@ -46,25 +41,24 @@ class Router
         $requestMethod = $_SERVER['REQUEST_METHOD'];
 
         foreach ($this->routes[$requestMethod] as $routeUrl => $controllerMethod) {
-            // Replace "{param}" with a regular expression to capture a parameter
             $routeUrlPattern = preg_replace('/\{(\w+)\}/', '(?<$1>[^\/]+)', $routeUrl);
 
-            // Check if the request URL matches the route pattern
             if (preg_match("#^$routeUrlPattern$#", $requestUrl, $matches)) {
                 list($controller, $method) = explode('@', $controllerMethod);
 
-                // Pass captured parameters to the controller method
                 $this->callControllerMethod($controller, $method, $matches);
 
                 return;
             }
         }
 
-        // If no route matches, handle as not found
         $this->notFound();
     }
 
 
+    /**
+     * @throws \ReflectionException
+     */
     private function callControllerMethod($controller, $method, $params): void
     {
         $controllerClassName = 'App\\' . $controller;
@@ -79,11 +73,9 @@ class Router
                 foreach ($reflectionMethod->getParameters() as $param) {
                     $paramName = $param->getName();
 
-                    // Check if the parameter exists in the $params array
                     if (array_key_exists($paramName, $params)) {
                         $parameters[] = $params[$paramName];
                     } else {
-                        // If not, use null as the argument
                         $parameters[] = null;
                     }
                 }
@@ -98,7 +90,7 @@ class Router
     }
 
 
-    private function notFound()
+    private function notFound(): void
     {
         echo "not found";
     }

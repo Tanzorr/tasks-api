@@ -6,13 +6,16 @@ class TaskRequest extends Request
 {
 
     public function __construct()
-    {
+    {}
 
-    }
-
+    /**
+     * @throws \Exception
+     */
     public function validated()
     {
         $requestData = $this->getBody();
+
+
 
         $validator = new TaskValidator($requestData);
         if ($validator->validate()) {

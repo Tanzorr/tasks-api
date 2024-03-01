@@ -3,16 +3,7 @@
 namespace App;
 
 class Task
-{
-    private array $attributes = [
-        'title' => '',
-        'description' => '',
-        'has_deadline' => false,
-        'deadline' => null,
-        'author' => ''
-    ];
-
-    public function __construct(
+{public function __construct(
         private readonly Filesystem $filesystem,
         protected string            $tasksPatch
     )
@@ -24,22 +15,31 @@ class Task
         return $result = $this->readTaskFile();
     }
 
-    public function add(array $dataTask): void
+    /**
+     * @throws \Exception
+     */
+    public function add(array $taskData): void
     {
         $tasks = $this->readTaskFile();
 
-        if (isset($tasks[$dataTask['title']])) {
-            echo "Tis task title already exits. Please chose another one.";
-            return;
-        }
-        $tasks[$dataTask['title']][] = $dataTask;
-        $this->filesystem->put($this->tasksPatch, json_encode($tasks));
+        $title= $taskData['title'];
 
+        if (isset($tasks[$title])) {
+            throw new \Exception("Task with title '{$title}' already exists. Please choose another one.");
+        }
+
+        $tasks[$title][] = $taskData;
+        $this->filesystem->put($this->tasksPatch, json_encode($tasks));
     }
 
     public function delete(string $id): void
     {
         $tasks = $this->readTaskFile();
+
+        if (!isset($tasks[$id])) {
+            throw new \Exception("Task with ID '{$id}' does not exist.");
+        }
+
         unset($tasks[$id]);
 
         $this->filesystem->put($this->tasksPatch, json_encode($tasks));
@@ -49,6 +49,7 @@ class Task
     {
         if (!$this->filesystem->exists($this->tasksPatch)) {
             $this->filesystem->put($this->tasksPatch, json_encode([]));
+
             return [];
         }
 
