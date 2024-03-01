@@ -1,8 +1,9 @@
 <?php
 
-namespace App;
+namespace App\Requests;
 
 use App\Core\Request;
+use App\Validators\TaskValidator;
 
 class TaskRequest extends Request
 {

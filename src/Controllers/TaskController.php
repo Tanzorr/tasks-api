@@ -1,9 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Controllers;
 
 
 use App\Models\Task;
+use App\Requests\TaskRequest;
 
 class TaskController
 {
