@@ -14,7 +14,10 @@ class TaskController
 
     public function index(): void
     {
-        print_r($this->task->all());
+        $result = $this->task->all();
+        header('Content-Type: application/json');
+
+        echo json_encode($result);
     }
 
     /**
